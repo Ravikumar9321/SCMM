@@ -3,7 +3,7 @@
 Fullstack application for managing **Suppliers**, **Products**, **Orders**, and **Customers**.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.5-green.svg)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org)
 
 ## ✨ Features
@@ -19,7 +19,7 @@ Fullstack application for managing **Suppliers**, **Products**, **Orders**, and 
 
 | Frontend | Backend | Database |
 |----------|---------|----------|
-| React 18 | Spring Boot 3.2 | PostgreSQL |
+| React 18 | Spring Boot 3.5.5 | PostgreSQL |
 | React Router | Spring Data JPA | Hibernate |
 | CSS Modules | Maven/Eclipse | |
 
