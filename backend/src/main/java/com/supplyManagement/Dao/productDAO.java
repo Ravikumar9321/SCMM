@@ -1,17 +1,13 @@
 package com.supplyManagement.Dao;
 
-import java.util.List
-;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+
 import org.springframework.stereotype.Repository;
 
 import com.supplyManagement.Entity.Product;
-import com.supplyManagement.Entity.Supplier;
 import com.supplyManagement.Repository.Product_Repository;
 
 @Repository
@@ -51,13 +47,11 @@ public class productDAO {
 
 // 7)get Product by Pagination and Sort
 	public Page<Product> getProductByPagenation_Sort(int pageNumber, int pageSize, String field) {
-		// TODO Auto-generated method stub
 		return pr.findAll(PageRequest.of(pageNumber, pageSize,Sort.by(field).ascending()));
 	}
 
 //8)get Products by  stockQuality
 	public List<Product> getProductBystockQuantity(Integer stockQuantity) {
-		// TODO Auto-generated method stub
 		return pr.getProductsByStockQuantity(stockQuantity);
 	}
 

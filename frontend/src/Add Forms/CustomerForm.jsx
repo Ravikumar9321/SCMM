@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/api";
 
 function CustomerForm() {
     const [Customer, setCustomer] = useState({
@@ -21,7 +21,7 @@ function CustomerForm() {
         e.preventDefault();
         try {
             setLoading(true);
-            await axios.post("http://localhost:8080/api/customer", Customer);
+            await api.post("http://localhost:8080/api/customer", Customer);
             alert("Customer added successfully!");
             navigate('/customers');  // Back to Customers list
         } catch (error) {

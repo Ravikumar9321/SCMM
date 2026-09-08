@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/api";
 
 function AddSupplierForm() {
     const [supplier, setSupplier] = useState({
@@ -20,7 +20,7 @@ function AddSupplierForm() {
         e.preventDefault();
         try {
             setLoading(true);
-            await axios.post("http://localhost:8080/api/supplier", supplier);
+            await api.post("http://localhost:8080/api/supplier", supplier);
             alert("Supplier added successfully!");
             navigate('/suppliers');  // Back to suppliers list
         } catch (error) {

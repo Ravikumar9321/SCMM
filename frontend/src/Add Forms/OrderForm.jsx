@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/api";
 
 function OrderForm() {
     const [orderData, setOrderData] = useState({
@@ -16,7 +16,7 @@ function OrderForm() {
         setOrderData({ ...orderData, [e.target.name]: e.target.value });
     };
 
-    // ✅ Add product via prompt (simple for fresher)
+   
     const addProduct = () => {
         const productId = prompt("Enter Product ID:");
         if (productId && !isNaN(productId) && !orderData.productIds.includes(productId)) {
@@ -54,7 +54,7 @@ function OrderForm() {
 
         try {
             setLoading(true);
-            await axios.post(`http://localhost:8080/api/orders/${orderData.customerId}`, {
+            await api.post(`http://localhost:8080/api/orders/${orderData.customerId}`, {
                 products: orderData.productIds.map(id => ({ id: parseInt(id) })), // ✅ Fixed!
                 status: orderData.status,
                 trackingNumber: orderData.trackingNumber || "TRK" + Date.now()

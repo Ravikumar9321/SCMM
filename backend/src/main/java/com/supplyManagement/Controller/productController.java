@@ -1,4 +1,4 @@
-package com.supplyManagement.Contoller;
+package com.supplyManagement.Controller;
 
 import java.util.List;
 
@@ -12,8 +12,12 @@ import com.supplyManagement.Dto.ResponseStructure;
 import com.supplyManagement.Entity.*;
 import com.supplyManagement.Service.Product_Service;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/product")
+@CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "Product", description = "Product related APIs")
 public class productController {
 	
 	@Autowired

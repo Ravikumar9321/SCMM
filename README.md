@@ -1,75 +1,126 @@
-# 📦 Supply Chain Management Module (SCMM)
+# 📦 SCMM – Supply Chain Management Module
 
-Fullstack application for managing **Suppliers**, **Products**, **Orders**, and **Customers**.
+A production‑ready full‑stack application for managing **Suppliers**, **Products**, **Orders**, and **Customers**, built with **Spring Boot + React.js**, featuring secure JWT authentication, Swagger API documentation, and PostgreSQL database integration.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.5-green.svg)](https://spring.io/projects/spring-boot)
-[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org)
+---
+
+## 🚀 Tech Stack
+
+### Backend
+- Java 21  
+- Spring Boot 3.5.5  
+- Spring Security (JWT Authentication)  
+- Spring Data JPA / Hibernate  
+- PostgreSQL  
+- Swagger/OpenAPI 3.0  
+- Maven  
+
+### Frontend
+- React.js  
+- Axios (with interceptors for JWT authentication)  
+- React Router  
+- useState & useEffect  
+- Responsive CSS  
+
+### Tools
+- Postman (API Testing)  
+- JUnit 5 & Mockito (Unit Testing)  
+- Git & GitHub  
+- Eclipse IDE  
+
+---
+
+## 🏗️ Architecture
+**Frontend (React)** ➝ **REST API (Spring Boot)** ➝ **PostgreSQL Database**
+
+Backend follows a clean layered architecture:
+- **Controller Layer** – Handles HTTP requests  
+- **Service Layer** – Business logic  
+- **Repository Layer** – Database interaction  
+
+---
 
 ## ✨ Features
+- 👥 **Supplier Management** – Add, update, and track suppliers  
+- 📦 **Product Management** – Inventory tracking with CRUD APIs  
+- 📋 **Order Management** – Create and monitor orders  
+- 🛒 **Customer Management** – Manage customer profiles  
+- 🔒 **Secure Authentication** – JWT login & protected routes  
+- 📘 **API Documentation** – Swagger UI with JWT integration  
+- 🧪 **Testing** – Unit tests with JUnit 5 & Mockito  
 
-- **Suppliers** 👥 - Manage supplier relationships
-- **Products** 📦 - Track inventory levels  
-- **Orders** 📋 - Process and monitor orders
-- **Customers** 🛒 - Manage customer profiles
-- **RESTful APIs** - Complete CRUD operations
-- **Responsive UI** - Modern React dashboard
+---
 
-## 🏗️ Tech Stack
+## 🗄️ Database Design
+**Entities:**
+- **Supplier** → supplierId, name, contact, address  
+- **Product** → productId, name, price, stock, supplier (Many‑to‑One)  
+- **Order** → orderId, orderDate, totalAmount, customer (Many‑to‑One), products (Many‑to‑Many)  
+- **Customer** → customerId, name, email, phone, orders (One‑to‑Many)  
 
-| Frontend | Backend | Database |
-|----------|---------|----------|
-| React 18 | Spring Boot 3.5.5 | PostgreSQL |
-| React Router | Spring Data JPA | Hibernate |
-| CSS Modules | Maven/Eclipse | |
+---
 
-## 🚀 Quick Start
+## 📁 Project Structure
+| Path | Description |
+|------|-------------|
+| `backend/` | Spring Boot API |
+| `entity/` | Supplier, Product, Order, Customer entities |
+| `controller/` | REST Controllers |
+| `service/` | Business Logic |
+| `repository/` | JPA Repositories |
+| `frontend/` | React Application |
+| `management/` | Dashboard, Suppliers, Products, Orders, Customers |
+| `doc/` | Screenshots & Documentation |
+| `README.md` | This file |
 
-### 1. Clone Repository
-```bash
-git clone https://github.com/Ravikumar9321/SCMM.git
-cd SCMM
+---
 
-2. Backend Setup (Eclipse)
-cd backend
-# Open in Eclipse → Right-click project → Run As → Spring Boot App
+## 🔗 REST API Endpoints
 
-Backend runs on: http://localhost:8080
+### Supplier APIs
+| Method | Endpoint       | Description        |
+| ------ | -------------- | ------------------ |
+| GET    | `/supplier`    | Get all suppliers  |
+| POST   | `/supplier`    | Create supplier    |
 
-3. Frontend Setup
-cd frontend
-npm install
-npm start
-Frontend runs on: http://localhost:3000
+### Product APIs
+| Method | Endpoint       | Description        |
+| ------ | -------------- | ------------------ |
+| GET    | `/products`    | Get all products   |
+| POST   | `/products`    | Add new product    |
 
-📁 Project Structure
-SCMM/
-├── backend/                 # Spring Boot API
-│   ├── src/main/java/com/supplyManagement/
-│   │   ├── Entity/  # Customer, Orders, Product, Supplier
-│   │   ├── Dao/ # Data Access Objects
-│   │   ├── Service/ #Business Logic
-│   │   └── Repository/ # JPA Repositories
-│   └── pom.xml
-├── frontend/      # React App
-│   ├── src/
-│   │   ├── App.js
-│   │   └── Home.jsx        
-│   └── package.json
-├── doc/   # Screenshort        
-└── README.md
+### Order APIs
+| Method | Endpoint       | Description        |
+| ------ | -------------- | ------------------ |
+| GET    | `/orders`      | Get all orders     |
+| POST   | `/orders`      | Create new order   |
 
-🌐 API Endpoints
-| Method | Endpoint                        | Description       |
-| ------ | ------------------------------- | ----------------- |
-| GET    | http://localhost:8080/supplier | Get all suppliers |
-| POST   | http://localhost:8080/supplier | Create supplier   |
-| GET    | http://localhost:8080/products  | Get all products  |
+### Customer APIs
+| Method | Endpoint       | Description        |
+| ------ | -------------- | ------------------ |
+| GET    | `/customers`   | Get all customers  |
+| POST   | `/customers`   | Add new customer   |
 
-🛠️ Environment Setup
-Backend (Eclipse/Eclipse Run Configuration)
+---
+
+## 🧪 How to Run Locally
+
+### 1️⃣ Configure PostgreSQL
+```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/scmm
 spring.datasource.username=postgres
-spring.datasource.password=yourpassword
+spring.datasource.password=root
 spring.jpa.hibernate.ddl-auto=update
 server.port=8080
+
+
+ ###  2️⃣ Backend Setup (Eclipse)
+
+-->   Import the backend project into Eclipse IDE
+-->   Right‑click the project → Run As → Spring Boot App
+-->    Backend runs on: http://localhost:8080
+
+###  3️⃣ Frontend Setup
+-->    cd frontend
+-->   npm install
+-->   npm start

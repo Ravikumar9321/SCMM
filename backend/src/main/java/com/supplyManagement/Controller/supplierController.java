@@ -1,25 +1,23 @@
-package com.supplyManagement.Contoller;
+package com.supplyManagement.Controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import com.supplyManagement.Dto.ResponseStructure;
-import com.supplyManagement.Entity.Product;
+
 import com.supplyManagement.Entity.Supplier;
 import com.supplyManagement.Service.Supplier_Service;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api/supplier")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "Supplier", description = "Supplier related APIs")
 public class supplierController {
 	
 	@Autowired
@@ -42,7 +40,7 @@ public class supplierController {
 		return service.fetchSupplierById(id);
 	}
 	//iv)update Supplier details
-	@PutMapping
+	@PutMapping("/{id}")
 	public ResponseEntity<ResponseStructure<Supplier>> updateSupplierDetails(@RequestBody Supplier supplier){
 		return service.updateSupplier(supplier);
 	}

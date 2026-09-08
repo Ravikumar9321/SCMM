@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 function Products() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+
     const navigate = useNavigate();
 
     const getProducts = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:8080/api/product");
+            const response = await api.get("http://localhost:8080/api/product");
             setProducts(response.data.data || response.data);
         } catch (error) {
-            alert("Failed to load products");
-            console.error("Products fetch error:", error);
-        } finally {
+          setError(error.response?.data?.message);        
+} 
+finally {
             setLoading(false);
         }
     };
@@ -23,7 +25,7 @@ function Products() {
     const deleteProduct = async (product) => {
         if (window.confirm(`Are you sure you want to delete "${product.name}"?`)) {
             try {
-                await axios.delete(`http://localhost:8080/api/product/${product.id}`);
+                await api.delete(`http://localhost:8080/api/product/${product.id}`);
                 setProducts(products.filter(p => p.id !== product.id));
             } catch (error) {
                 alert("Failed to delete product");
@@ -43,7 +45,9 @@ function Products() {
     if (loading) return <div style={styles.loading}>Loading products...</div>;
 
     return (
+
         <div style={styles.container}>
+              <h1>{error}</h1>
             <div style={styles.header}>
                 <h1 style={styles.title}>Products ({products.length})</h1>
                 <div style={styles.buttonGroup}>

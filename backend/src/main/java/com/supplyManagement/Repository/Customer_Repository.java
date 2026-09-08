@@ -1,10 +1,8 @@
 package com.supplyManagement.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 
 import com.supplyManagement.Entity.Customer;
-import com.supplyManagement.Entity.Supplier;
 
 
 public interface Customer_Repository  extends JpaRepository<Customer, Integer>{

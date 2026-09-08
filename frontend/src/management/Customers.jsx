@@ -1,20 +1,23 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 function Customers() {
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [error, setError] = useState(null);
+
 
     const fetchCustomers = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:8080/api/customer");
+            setError(null);
+            const response = await api.get("http://localhost:8080/api/customer");
             setCustomers(response.data.data || response.data);
+
         } catch (error) {
-            alert("Failed to load customers");
-            console.error("Customers fetch error:", error);
+           setError(error.response?.message);
         } finally {
             setLoading(false);
         }
@@ -27,11 +30,10 @@ function Customers() {
     const deleteCustomer = async (customer) => {
         if (window.confirm(`Are you sure you want to delete "${customer.name}"?`)) {
             try {
-                await axios.delete(`http://localhost:8080/api/customer/${customer.id}`);
+                await api.delete(`http://localhost:8080/api/customer/${customer.id}`);
                 setCustomers(customers.filter(c => c.id !== customer.id));
             } catch (error) {
-                alert("Failed to delete customer");
-                console.error("Delete error:", error);
+           setError(error.response.data?.message);
             }
         }
     };
@@ -41,17 +43,23 @@ function Customers() {
     }, []);
 
     if (loading) return <div style={styles.loading}>Loading customers...</div>;
-
-    return (
-        <div style={styles.container}>
-            <div style={styles.header}>
-                <h1 style={styles.title}>Customers ({customers.length})</h1>
-                <div style={styles.buttonGroup}>
-                    <button style={styles.addBtn} onClick={addCustomer}>➕ Add Customer</button>
-                    <button style={styles.backBtn} onClick={() => navigate("/")}>🏠 Home</button>
-                </div>
+return (
+    <div style={styles.container}>
+        <div style={styles.header}>
+            <h1 style={styles.title}>Customers ({customers.length})</h1>
+            <div style={styles.buttonGroup}>
+                <button style={styles.addBtn} onClick={addCustomer}>➕ Add Customer</button>
+                <button style={styles.backBtn} onClick={() => navigate("/")}>🏠 Home</button>
             </div>
-            
+        </div>
+
+        {customers.length === 0 ? (
+            <div style={styles.emptyState}>
+                <div style={styles.emptyIcon}>📭</div>
+                <h3 style={styles.emptyTitle}>{error}</h3>
+                <p style={styles.emptyText}>Start by adding your first customer!</p>
+            </div>
+        ) : (
             <div style={styles.tableContainer}>
                 <table style={styles.table} border="3px">
                     <thead>
@@ -67,26 +75,13 @@ function Customers() {
                     <tbody>
                         {customers.map(customer => (
                             <tr key={customer.id} style={styles.tr}>
+                                <td style={styles.td}><span style={styles.customerId}>{customer.id}</span></td>
+                                <td style={styles.td}><span style={styles.customerName}>{customer.name}</span></td>
+                                <td style={styles.td}><span style={styles.email}>{customer.email}</span></td>
+                                <td style={styles.td}><span style={styles.contact}>{customer.contact}</span></td>
+                                <td style={styles.td}><span style={styles.address}>{customer.address}</span></td>
                                 <td style={styles.td}>
-                                    <span style={styles.customerId}>{customer.id}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.customerName}>{customer.name}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.email}>{customer.email}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.contact}>{customer.contact}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.address}>{customer.address}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <button 
-                                        style={styles.deleteBtn} 
-                                        onClick={() => deleteCustomer(customer)}
-                                    >
+                                    <button style={styles.deleteBtn} onClick={() => deleteCustomer(customer)}>
                                         🗑️ Delete
                                     </button>
                                 </td>
@@ -95,11 +90,12 @@ function Customers() {
                     </tbody>
                 </table>
             </div>
-        </div>
-    );
+        )}
+    </div>
+);
 }
 
-// PERFECT CONSISTENCY - Identical to Products/Suppliers/Orders
+
 const styles = {
     container: { 
         padding: "2rem", 
@@ -227,7 +223,34 @@ const styles = {
         background: "rgba(248,250,252,0.8)",
         borderRadius: "16px",
         boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
-    }
+    },
+    emptyState: {
+    textAlign: "center",
+    padding: "4rem 2rem",
+    background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+    borderRadius: "20px",
+    border: "3px dashed #cbd5e1",
+    margin: "2rem 0",
+    maxWidth: "600px",
+    marginLeft: "auto",
+    marginRight: "auto"
+},
+emptyIcon: {
+    fontSize: "4rem",
+    marginBottom: "1rem"
+},
+emptyTitle: {
+    fontSize: "1.8rem",
+    color: "#475569",
+    marginBottom: "0.5rem",
+    fontWeight: "700"
+},
+emptyText: {
+    fontSize: "1.1rem",
+    color: "#64748b",
+    marginBottom: "2rem"
+}
 };
 
 export default Customers;
+        

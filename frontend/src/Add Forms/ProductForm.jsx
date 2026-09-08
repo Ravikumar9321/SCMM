@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/api";
 
 function ProductForm() {
     const [product, setProduct] = useState({
@@ -20,8 +20,7 @@ function ProductForm() {
         e.preventDefault();
         try {
             setLoading(true);
-            // ✅ FIXED: Correct URL + pass supplierId as path param
-            await axios.post(`http://localhost:8080/api/product/${product.supplierId}`, {
+            await api.post(`http://localhost:8080/api/product/${product.supplierId}`, {
                 name: product.name,
                 stockQuantity: parseInt(product.stockQuantity),  
                 price: parseFloat(product.price)                

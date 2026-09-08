@@ -1,4 +1,4 @@
-package com.supplyManagement.Contoller;
+package com.supplyManagement.Controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,13 @@ import com.supplyManagement.Dto.ResponseStructure;
 import com.supplyManagement.Entity.*;
 import com.supplyManagement.Service.Orders_Service;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 @RestController
 @RequestMapping("/api/orders")
+@CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "Order", description = "Orders related APIs")
 public class ordersController {
 	@Autowired
 	private Orders_Service service;

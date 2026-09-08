@@ -1,36 +1,34 @@
 package com.supplyManagement.Exception;
 
-import org.springframework.http.*;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.supplyManagement.Dto.ResponseStructure;
 
-
 @ControllerAdvice
-public class GlobalExceptionHadler extends ResponseEntityExceptionHandler  {
-	
+public class GlobalExceptionHadler extends ResponseEntityExceptionHandler {
+
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> handleINFE(IdNotFoundException e) {
-		ResponseStructure<String> b=new ResponseStructure<>();
+		ResponseStructure<String> b = new ResponseStructure<>();
 		b.setStatusCode(HttpStatus.NOT_FOUND.value());
-		b.setMessage("Failure");
-		b.setData(e.getMessage());
-		
-		return new ResponseEntity<ResponseStructure<String>>(b,HttpStatus.NOT_FOUND);
+		b.setMessage(e.getMessage());
+		b.setData("FAILURE");
+
+		return new ResponseEntity<ResponseStructure<String>>(b, HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler(NoRecordFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> handleNRFE(NoRecordFoundException e) {
-		ResponseStructure<String> b=new ResponseStructure<>();
+		ResponseStructure<String> b = new ResponseStructure<>();
 		b.setStatusCode(HttpStatus.NOT_FOUND.value());
-		b.setMessage("Failure");
-		b.setData(e.getMessage());
-		
-		return new ResponseEntity<ResponseStructure<String>>(b,HttpStatus.NOT_FOUND);
+		b.setMessage(e.getMessage());
+		b.setData("FAILURE");
+
+		return new ResponseEntity<ResponseStructure<String>>(b, HttpStatus.NOT_FOUND);
 	}
 
 }
- 

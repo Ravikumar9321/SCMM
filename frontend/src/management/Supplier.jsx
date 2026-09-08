@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 function Suppliers() {
     const [suppliers, setSuppliers] = useState([]);
@@ -10,30 +10,28 @@ function Suppliers() {
     const getSupplier = async () => {
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:8080/api/supplier");
-            setSuppliers(response.data.data || response.data);
+            const response = await api.get("http://localhost:8080/api/supplier");
+            setSuppliers(response.data.data || response.data || []);
         } catch (error) {
-            alert("Failed to load suppliers");
-            console.error("Suppliers fetch error:", error);
+            setSuppliers([]);
         } finally {
             setLoading(false);
         }
     };
 
     const deleteSupplier = async (id) => {
-        if (window.confirm(`Are you sure you want to delete this supplier?`)) {
+        if (window.confirm("Are you sure you want to delete this supplier?")) {
             try {
-                await axios.delete(`http://localhost:8080/api/supplier/${id}`);
-                setSuppliers(suppliers.filter(s => s.id !== id));
+                await api.delete(`http://localhost:8080/api/supplier/${id}`);
+                setSuppliers((prev) => prev.filter((s) => s.id !== id));
             } catch (error) {
                 alert("Failed to delete supplier");
-                console.error("Delete error:", error);
             }
         }
     };
 
     const addSupplier = () => {
-        navigate('/add-supplier');
+        navigate("/add-supplier");
     };
 
     useEffect(() => {
@@ -51,7 +49,7 @@ function Suppliers() {
                     <button style={styles.backBtn} onClick={() => navigate("/")}>🏠 Home</button>
                 </div>
             </div>
-            
+
             <div style={styles.tableContainer}>
                 <table style={styles.table} border="2px">
                     <thead>
@@ -65,33 +63,41 @@ function Suppliers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {suppliers.map(supplier => (
-                            <tr key={supplier.id} style={styles.tr}>
-                                <td style={styles.td}>
-                                    <span style={styles.supplierId}>{supplier.id}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.supplierName}>{supplier.name}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.contact}>{supplier.contact}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.company}>{supplier.companyname}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <span style={styles.email}>{supplier.email}</span>
-                                </td>
-                                <td style={styles.td}>
-                                    <button 
-                                        style={styles.deleteBtn} 
-                                        onClick={() => deleteSupplier(supplier.id)}
-                                    >
-                                        🗑️ Delete
-                                    </button>
+                        {suppliers.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" style={styles.td}>
+                                    <p style={styles.emptyText}>Start by adding your supplier details!</p>
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            suppliers.map((supplier) => (
+                                <tr key={supplier.id} style={styles.tr}>
+                                    <td style={styles.td}>
+                                        <span style={styles.supplierId}>{supplier.id}</span>
+                                    </td>
+                                    <td style={styles.td}>
+                                        <span style={styles.supplierName}>{supplier.name}</span>
+                                    </td>
+                                    <td style={styles.td}>
+                                        <span style={styles.contact}>{supplier.contact}</span>
+                                    </td>
+                                    <td style={styles.td}>
+                                        <span style={styles.company}>{supplier.companyname}</span>
+                                    </td>
+                                    <td style={styles.td}>
+                                        <span style={styles.email}>{supplier.email}</span>
+                                    </td>
+                                    <td style={styles.td}>
+                                        <button
+                                            style={styles.deleteBtn}
+                                            onClick={() => deleteSupplier(supplier.id)}
+                                        >
+                                            🗑️ Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -99,7 +105,8 @@ function Suppliers() {
     );
 }
 
-// Exact same styles as Products - Perfect consistency!
+
+
 const styles = {
     container: { 
         padding: "2rem", 
@@ -226,7 +233,15 @@ const styles = {
         background: "rgba(248,250,252,0.8)",
         borderRadius: "16px",
         boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
-    }
+    },
+   
+
+
+emptyText: {
+    fontSize: "1.1rem",
+    color: "#64748b",
+    marginBottom: "2rem"
+}
 };
 
 export default Suppliers;

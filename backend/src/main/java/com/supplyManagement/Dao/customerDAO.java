@@ -1,18 +1,15 @@
 package com.supplyManagement.Dao;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.*;
 
+import org.springframework.stereotype.Repository;
 import com.supplyManagement.Entity.Customer;
-import com.supplyManagement.Entity.Supplier;
+
 import com.supplyManagement.Repository.Customer_Repository;
-import com.supplyManagement.Repository.Product_Repository;
+
 
 @Repository
 public class customerDAO {
@@ -21,12 +18,10 @@ public class customerDAO {
      
   //i)save Customer
 	public Customer saveCustomer(Customer customer) {
-		// TODO Auto-generated method stub
 		return cr.save(customer);
 	}
 //ii)get all customer
 	public List<Customer> findallCustomer() {
-		// TODO Auto-generated method stub
 		return cr.findAll();
 	}
 	

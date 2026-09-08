@@ -1,22 +1,17 @@
 package com.supplyManagement.Service;
 
-import java.util.ArrayList;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.*;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import com.supplyManagement.Dao.*;
 import com.supplyManagement.Dto.ResponseStructure;
 import com.supplyManagement.Entity.*;
-import com.supplyManagement.Exception.IdNotFoundException;
-import com.supplyManagement.Exception.NoRecordFoundException;
+import com.supplyManagement.Exception.*;
 
 @Service
 public class Product_Service {

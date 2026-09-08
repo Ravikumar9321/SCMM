@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
 function Orders() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
-    const getOrders = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get("http://localhost:8080/api/orders");
-            setOrders(response.data.data || response.data);
-        } catch (error) {
-            alert("Failed to load orders");
-            console.error("Orders fetch error:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+        
+      setLoading(true);
+      const response = await api.get("/api/orders");
+      setOrders(response.data.data || response.data);
+    } catch (error) {
+      alert("Failed to load orders");
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchOrders();
+}, []);
 
     const deleteOrder = async (id) => {
         if (window.confirm(`Are you sure you want to delete this order?`)) {
             try {
-                await axios.delete(`http://localhost:8080/api/orders/${id}`);
+                await api.delete(`http://localhost:8080/api/orders/${id}`);
                 setOrders(orders.filter(o => o.id !== id));
             } catch (error) {
                 alert("Failed to delete order");
-                console.error("Delete error:", error);
             }
         }
     };
@@ -36,10 +37,7 @@ function Orders() {
         navigate('/add-order');
     };
 
-    useEffect(() => {
-        getOrders();
-    }, []);
-
+ 
     if (loading) return <div style={styles.loading}>Loading orders...</div>;
 
     return (
@@ -66,7 +64,11 @@ function Orders() {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.map(order => (
+                        {orders.length === 0 ? (
+            <div>
+                <p style={styles.emptyText}>No Orders found !</p>
+            </div>
+        ):orders.map(order => (
                             <tr key={order.id} style={styles.tr}>
                                 <td style={styles.td}>
                                     <span style={styles.orderId}>#{order.id}</span>
