@@ -23,8 +23,7 @@ A production‑ready full‑stack application for managing **Suppliers**, **Prod
 - Responsive CSS  
 
 ### Tools
-- Postman (API Testing)  
-- JUnit 5 & Mockito (Unit Testing)  
+
 - Git & GitHub  
 - Eclipse IDE  
 
